@@ -54,9 +54,7 @@ int main() {
 
   Allocators::LinearAllocator Allocator(1024, Memory);
 
-  int* NewInt = Allocators::allocateNew<int>(Allocator);
-
-  Allocators::deallocateDelete(Allocator, NewInt);
+  int* NewInt = Allocators::AllocateNew<int>(Allocator);
 
   Allocator.Clear();
   free(Memory);
