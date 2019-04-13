@@ -7,7 +7,7 @@
 #else
 #define DH_ASSERT(expression)                                              \
   do {                                                                     \
-    if (!expression) {                                                     \
+    if (!(expression)) {                                                     \
       std::cerr << "Assert:" << #expression << ", " << __FUNCTION__ << "," \
                 << __LINE__ << "," << __FILE__ << std::endl;               \
       __debugbreak();                                                      \
@@ -20,7 +20,7 @@
 #else
 #define DH_ASSERT_MESSAGE(expression, message)                         \
   do {                                                                 \
-    if (!expression) {                                                 \
+    if (!(expression)) {                                                 \
       std::cerr << "Assert:" << message << ", " << __FUNCTION__ << "," \
                 << __LINE__ << "," << __FILE__ << std::endl;           \
       __debugbreak();                                                  \

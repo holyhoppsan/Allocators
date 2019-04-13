@@ -4,6 +4,17 @@
 #include <iostream>
 
 namespace PointerMath {
+
+inline void* Add(void* Address, size_t Offset) {
+  const size_t AddressTyped = reinterpret_cast<size_t>(Address);
+  return reinterpret_cast<void*>(AddressTyped + Offset);
+}
+
+inline void* Subtract(void* Address, size_t Offset) {
+  const size_t AddressTyped = reinterpret_cast<size_t>(Address);
+  return reinterpret_cast<void*>(AddressTyped - Offset);
+}
+
 inline void* alignForward(const void* Address, size_t Alignment) {
   const size_t AddressTyped = reinterpret_cast<size_t>(Address);
   const size_t AddressPlusAlignment =
