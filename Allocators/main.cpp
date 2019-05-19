@@ -48,7 +48,7 @@ int main() {
             << "Sizeof base: " << sizeof(Base) << std::endl
             << "Sizeof Derrived: " << sizeof(Derrived) << std::endl
             << "Align forward 0x5637 with 4 byte alignment "
-            << PointerMath::alignForward((void*)0x5637, 4) << std::endl;
+            << PointerMath::AlignForward((void*)0x5637, 4) << std::endl;
 
   void* Memory = malloc(1024);
 

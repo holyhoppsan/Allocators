@@ -25,7 +25,7 @@ StackAllocator::~StackAllocator() {
 
 void* StackAllocator::Allocate(size_t Size, size_t Alignment) {
   DH_ASSERT(m_Size != 0);
-  size_t Adjustment = PointerMath::alignForwardAdjustmentWithHeader(
+  size_t Adjustment = PointerMath::AlignForwardAdjustmentWithHeader(
       m_CurrentPosition, Alignment, sizeof(AllocationHeader));
 
   if (m_UsedMemory + Adjustment + Size > m_Size) {

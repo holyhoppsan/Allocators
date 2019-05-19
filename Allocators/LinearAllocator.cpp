@@ -14,7 +14,7 @@ LinearAllocator::~LinearAllocator() { m_CurrentPos = nullptr; }
 void* LinearAllocator::Allocate(size_t Size, size_t Alignment) {
   DH_ASSERT(Size != 0);
   size_t Adjustment =
-      PointerMath::alignForwardAdjustment(m_CurrentPos, Alignment);
+      PointerMath::AlignForwardAdjustment(m_CurrentPos, Alignment);
 
   if (m_UsedMemory + Adjustment + Size > m_Size) {
     return nullptr;

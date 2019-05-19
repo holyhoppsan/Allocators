@@ -15,7 +15,7 @@ inline void* Subtract(void* Address, size_t Offset) {
   return reinterpret_cast<void*>(AddressTyped - Offset);
 }
 
-inline void* alignForward(const void* Address, size_t Alignment) {
+inline void* AlignForward(const void* Address, size_t Alignment) {
   const size_t AddressTyped = reinterpret_cast<size_t>(Address);
   const size_t AddressPlusAlignment =
       AddressTyped + static_cast<size_t>(Alignment - 1);
@@ -35,7 +35,7 @@ inline void* alignForward(const void* Address, size_t Alignment) {
   return reinterpret_cast<void*>(MaskedResult);
 }
 
-inline size_t alignForwardAdjustment(const void* Address, size_t Alignment) {
+inline size_t AlignForwardAdjustment(const void* Address, size_t Alignment) {
   const size_t Adjustment =
       Alignment - (reinterpret_cast<size_t>(Address) & (Alignment - 1));
 
@@ -45,10 +45,10 @@ inline size_t alignForwardAdjustment(const void* Address, size_t Alignment) {
   return Adjustment;
 }
 
-inline size_t alignForwardAdjustmentWithHeader(const void* Address,
+inline size_t AlignForwardAdjustmentWithHeader(const void* Address,
                                                size_t Alignment,
                                                size_t HeaderSize) {
-  size_t Adjustment = alignForwardAdjustment(Address, Alignment);
+  size_t Adjustment = AlignForwardAdjustment(Address, Alignment);
   size_t NeededSpace = HeaderSize;
 
   if (Adjustment < NeededSpace) {
