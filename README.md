@@ -26,7 +26,7 @@ This library uses GTest.
 
 ### And coding style tests
 
-TBD
+This project uses clang-format with googles style template.
 
 ## Built With
 
