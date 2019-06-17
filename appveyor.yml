@@ -17,8 +17,8 @@ build_script:
   - cmd: cd build
   - cmd: cmake c:/projects/allocators -G "Visual Studio 15"
   - cmd: cmake --build . --config "%CONFIGURATION%"
-   
+
   - sh: mkdir build
   - sh: cd build
-  - sh: cmake /home/appveyor/projects/allocators -G "Visual Studio 15"
-  - sh: cmake --build . --config "${CONFIGURATION}"
+  - sh: cmake -DCMAKE_BUILD_TYPE=${CONFIGURATION} ..
+  - sh: make
