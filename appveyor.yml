@@ -14,7 +14,7 @@ configuration:
 
 matrix:
   allow_failures:
-    - os: Linux
+    - os: Ubuntu
   fast_finish: true
 
 build_script: 
