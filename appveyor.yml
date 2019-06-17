@@ -10,3 +10,4 @@ clone_folder: c:/projects/source
 
 build_script: >-
   mkdir build
+  cd build
