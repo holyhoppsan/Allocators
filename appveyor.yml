@@ -7,10 +7,14 @@ branches:
 image: 
   - Visual Studio 2017
 
-clone_folder: c:/projects/source
+clone_folder: c:/projects/allocators
+
+configuration:
+  - Debug
+  - Release
 
 build_script: 
   - cmd: mkdir build
   - cmd: cd build
   - cmd: cmake c:/projects/source -G "Visual Studio 15"
-  - cmd: cmake --build . --config "Debug"
+  - cmd: cmake --build . --config "{CONFIGURATION}"
