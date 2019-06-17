@@ -6,8 +6,7 @@ branches:
 
 image: 
   - Visual Studio 2017
-
-clone_folder: c:/projects/allocators
+  - Ubuntu
 
 configuration:
   - Debug
@@ -18,3 +17,9 @@ build_script:
   - cmd: cd build
   - cmd: cmake c:/projects/allocators -G "Visual Studio 15"
   - cmd: cmake --build . --config "%CONFIGURATION%"
+
+build_script: 
+  - sh: mkdir build
+  - sh: cd build
+  - sh: cmake /home/appveyor/projects/allocators -G "Visual Studio 15"
+  - sh: cmake --build . --config "${CONFIGURATION}"
