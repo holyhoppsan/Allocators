@@ -1,5 +1,6 @@
 # Allocators
 
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/holyhoppsan/allocators?branch=master&svg=true)](https://ci.appveyor.com/project/Holyhoppsan/allocators)
 
 
