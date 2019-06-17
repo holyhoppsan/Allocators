@@ -1,5 +1,8 @@
 # Allocators
 
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/holyhoppsan/allocators?branch=master&svg=true)](https://ci.appveyor.com/project/Holyhoppsan/allocators)
+
+
 A small allocator library for C++
 
 ## Getting Started
