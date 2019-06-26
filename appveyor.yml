@@ -18,6 +18,7 @@ matrix:
   fast_finish: true
 
 build_script: 
+  - cmd: echo %PLATFORM%-%CONFIGURATION%
   - cmd: mkdir build
   - cmd: cd build
   - cmd: cmake c:/projects/allocators -G "Visual Studio 15"

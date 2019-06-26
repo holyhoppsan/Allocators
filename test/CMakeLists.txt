@@ -7,7 +7,3 @@ endif()
 add_executable(unit_tests main.cpp)
 
 target_link_libraries(unit_tests gtest_main allocators)
-
-enable_testing()
-
-add_test(NAME unit COMMAND ${CMAKE_BINARY_DIR}/test/unit_tests)

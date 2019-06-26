@@ -8,6 +8,8 @@ endif()
 # set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}")
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}")
 
+enable_testing()
+
 project(Allocators VERSION 1.0 DESCRIPTION "An Allocator library" LANGUAGES C CXX)
 
 # Download and unpack googletest at configure time
@@ -38,3 +40,5 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 add_subdirectory(src)
 add_subdirectory(apps)
 add_subdirectory(test)
+
+add_test(NAME unit COMMAND ${CMAKE_BINARY_DIR}/test/unit_tests)
