@@ -10,9 +10,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}"
 
 project(Allocators VERSION 1.0 DESCRIPTION "An Allocator library" LANGUAGES C CXX)
 
-add_subdirectory(src)
-add_subdirectory(apps)
-
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -42,3 +39,9 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 # add_executable(example example.cpp)
 # target_link_libraries(example gtest_main)
 # add_test(NAME example_test COMMAND example)
+
+add_subdirectory(src)
+add_subdirectory(apps)
+
+enable_testing()
+add_subdirectory(test)
