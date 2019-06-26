@@ -23,7 +23,7 @@ matrix:
 build_script: 
   - cmd: mkdir build
   - cmd: cd build
-  - cmd: cmake c:/projects/allocators -G "Visual Studio 15"
+  - cmd: cmake c:/projects/allocators -G "Visual Studio 15" -A %PLATFORM%
   - cmd: cmake --build . --config "%CONFIGURATION%"
   - cmd: ctest -C "%CONFIGURATION%" -V
 

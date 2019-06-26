@@ -2,7 +2,7 @@
 
 TEST(example, add)
 {
-    ASSERT_EQ(2, 1);
+    ASSERT_EQ(2, 2);
 }
 
 int main(int argc, char** argv)
