@@ -25,9 +25,6 @@ build_script:
   - cmd: cd build
   - cmd: cmake c:/projects/allocators -G "Visual Studio 15"
   - cmd: cmake --build . --config "%CONFIGURATION%"
-  - cmd: echo %PLATFORM%-%CONFIGURATION%
-  - cmd: ls
-  - cmd: cd %PLATFORM%-%CONFIGURATION%
   - cmd: ctest -C "%CONFIGURATION%" -V
 
   - sh: mkdir build
