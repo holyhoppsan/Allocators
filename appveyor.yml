@@ -8,6 +8,9 @@ image:
   - Visual Studio 2017
   - Ubuntu
 
+platform:
+  - x86
+
 configuration:
   - Debug
   - Release
