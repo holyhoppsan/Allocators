@@ -32,7 +32,7 @@ T* AllocateNew(AllocatorBase& Allocator) {
 
 template <typename T>
 T* AllocateNew(AllocatorBase& Allocator, const T& t) {
-  return new (Allocator.Allocate(sizeof(T), _alignof(T))) T(t);
+  return new (Allocator.Allocate(sizeof(T), alignof(T))) T(t);
 }
 
 template <typename T>
