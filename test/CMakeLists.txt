@@ -4,6 +4,10 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
     cmake_policy(VERSION &{CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
-add_executable(unit_tests main.cpp)
+file(GLOB test_source_files
+    "*.cpp"
+)
+
+add_executable(unit_tests ${test_source_files})
 
 target_link_libraries(unit_tests gtest_main allocators)
