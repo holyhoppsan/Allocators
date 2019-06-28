@@ -29,7 +29,7 @@ void* LinearAllocator::Allocate(size_t Size, size_t Alignment) {
 }
 
 void LinearAllocator::Deallocate(void* Pointer) {
-  DH_ASSERT_MESSAGE(false, "Use clear instead()");
+  DH_ASSERT_MESSAGE(false, "Use clear instead");
 }
 
 void LinearAllocator::Clear() {

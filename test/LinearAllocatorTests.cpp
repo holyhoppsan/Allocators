@@ -9,77 +9,64 @@ struct FourByteStruct {
   char Four;
 };
 
-TEST(linearallocator, allocator_size_is_initialized_correctly) {
-  const int32_t Size = 1024;
-  void* Memory = malloc(Size);
+class LinearAllocatorTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    BlobSize = 1024;
+    Memory = malloc(BlobSize);
+  }
 
-  Allocators::LinearAllocator Allocator(Size, Memory);
+  void TearDown() override { free(Memory); }
 
-  ASSERT_EQ(Allocator.GetSize(), Size);
+  size_t BlobSize;
+  void* Memory;
+};
 
-  free(Memory);
+TEST_F(LinearAllocatorTest, allocator_size_is_initialized_correctly) {
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
+
+  ASSERT_EQ(Allocator.GetSize(), BlobSize);
 }
 
-TEST(linearallocator, allocator_start_pointer_is_initialized_correctly) {
-  const int32_t Size = 1024;
-  void* Memory = malloc(Size);
-
-  Allocators::LinearAllocator Allocator(Size, Memory);
+TEST_F(LinearAllocatorTest, allocator_start_pointer_is_initialized_correctly) {
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
 
   ASSERT_TRUE(Allocator.GetStart() != nullptr);
-
-  free(Memory);
 }
 
-TEST(linearallocator, allocator_used_memory_is_zero_after_creation) {
-  const int32_t Size = 1024;
-  void* Memory = malloc(Size);
-
-  Allocators::LinearAllocator Allocator(Size, Memory);
+TEST_F(LinearAllocatorTest, allocator_used_memory_is_zero_after_creation) {
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
 
   ASSERT_EQ(Allocator.GetUsedMemory(), 0);
-
-  free(Memory);
 }
 
-TEST(linearallocator, allocator_number_of_allocations_is_zero_after_creation) {
-  const int32_t Size = 1024;
-  void* Memory = malloc(Size);
-
-  Allocators::LinearAllocator Allocator(Size, Memory);
+TEST_F(LinearAllocatorTest,
+       allocator_number_of_allocations_is_zero_after_creation) {
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
 
   ASSERT_EQ(Allocator.GetUsedMemory(), 0);
-
-  free(Memory);
 }
 
-TEST(
-    linearallocator,
+TEST_F(
+    LinearAllocatorTest,
     allocating_a_four_byte_struct_yields_correct_allocation_for_a_four_byte_aligned_allocator) {
-  const int32_t Size = 1024;
-  void* Memory = malloc(Size);
-
-  Allocators::LinearAllocator Allocator(Size, Memory);
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
 
   FourByteStruct* AllocatedPtr =
       Allocators::AllocateNew<FourByteStruct>(Allocator);
 
-  ASSERT_EQ(Allocator.GetSize(), Size);
+  ASSERT_EQ(Allocator.GetSize(), BlobSize);
   ASSERT_TRUE(Allocator.GetStart() != nullptr);
   ASSERT_EQ(Allocator.GetNumberOfAllocations(), 1);
   ASSERT_EQ(Allocator.GetUsedMemory(), 4);
 
   Allocator.Clear();
-  free(Memory);
 }
 
-TEST(
-    linearallocator,
+TEST_F(
+    LinearAllocatorTest,
     allocating_two_four_byte_struct_yields_correct_allocation_for_a_four_byte_aligned_allocator) {
-  const int32_t Size = 1024;
-  void* Memory = malloc(Size);
-
-  Allocators::LinearAllocator Allocator(Size, Memory);
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
 
   FourByteStruct* FirstAllocatedPtr =
       Allocators::AllocateNew<FourByteStruct>(Allocator);
@@ -87,7 +74,7 @@ TEST(
   FourByteStruct* SecondAllocatedPtr =
       Allocators::AllocateNew<FourByteStruct>(Allocator);
 
-  ASSERT_EQ(Allocator.GetSize(), Size);
+  ASSERT_EQ(Allocator.GetSize(), BlobSize);
   ASSERT_TRUE(Allocator.GetStart() != nullptr);
   ASSERT_EQ(Allocator.GetNumberOfAllocations(), 2);
   ASSERT_EQ(Allocator.GetUsedMemory(), 8);
@@ -97,7 +84,6 @@ TEST(
             4);
 
   Allocator.Clear();
-  free(Memory);
 }
 
 // TODO: Five byte struct with a four byte aligned allocator
@@ -111,6 +97,17 @@ TEST(
 // TODO: clear resets value
 
 // TODO if DH_ASSERT is caught by the test runner: Deallocating asserts
+TEST_F(LinearAllocatorTest, deallocating_leads_to_an_assert) {
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
+
+  FourByteStruct* AllocatedPtr =
+      Allocators::AllocateNew<FourByteStruct>(Allocator);
+
+  ASSERT_DEATH(Allocators::DeallocateDelete(Allocator, AllocatedPtr),
+               ".*Use\\sclear\\sinstead.*");
+
+  Allocator.Clear();
+}
 
 // TODO: Array allocation correctly with different alignments
 

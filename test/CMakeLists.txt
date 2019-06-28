@@ -11,3 +11,5 @@ file(GLOB test_source_files
 add_executable(unit_tests ${test_source_files})
 
 target_link_libraries(unit_tests gtest_main allocators)
+
+add_compile_definitions(WITH_TESTING)
