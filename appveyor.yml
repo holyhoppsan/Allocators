@@ -23,7 +23,8 @@ matrix:
 
 build_script:
   - cmd: if "%PLATFORM%"=="x64" (set ARCH= Win64)
-  - echo %ARCH%
+  - echo on
+  - echo "Variable %ARCH%"
   - cmd: mkdir build
   - cmd: cd build
   - cmd: cmake c:/projects/allocators -G "Visual Studio 15"
