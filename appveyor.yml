@@ -31,4 +31,4 @@ build_script:
   - sh: cd build
   - sh: cmake -DCMAKE_BUILD_TYPE=${CONFIGURATION} ..
   - sh: make
-  - sh: ctest
+  - sh: ctest -C "%CONFIGURATION%" -V
