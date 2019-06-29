@@ -96,7 +96,7 @@ TEST_F(
 
 // TODO: clear resets value
 
-// TODO if DH_ASSERT is caught by the test runner: Deallocating asserts
+#ifdef _DEBUG
 TEST_F(LinearAllocatorTest, deallocating_leads_to_an_assert) {
   Allocators::LinearAllocator Allocator(BlobSize, Memory);
 
@@ -108,6 +108,7 @@ TEST_F(LinearAllocatorTest, deallocating_leads_to_an_assert) {
 
   Allocator.Clear();
 }
+#endif  // DEBUG
 
 // TODO: Array allocation correctly with different alignments
 
