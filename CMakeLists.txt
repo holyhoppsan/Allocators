@@ -38,7 +38,6 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 add_subdirectory(src)
-add_subdirectory(apps)
 add_subdirectory(test)
 
 add_test(NAME unit COMMAND ${CMAKE_BINARY_DIR}/test/unit_tests)
