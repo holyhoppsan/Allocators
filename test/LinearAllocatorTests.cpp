@@ -148,6 +148,28 @@ TEST_F(
 
 // TODO: clear resets value
 
+
+TEST_F(LinearAllocatorTest, clear_resets_the_allocator) {
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
+
+  FiveByteStruct* AllocatedPtr =
+      Allocators::AllocateNew<FiveByteStruct>(Allocator);
+
+  ASSERT_EQ(sizeof(FiveByteStruct), 8);
+  ASSERT_EQ(Allocator.GetSize(), BlobSize);
+  ASSERT_TRUE(Allocator.GetStart() != nullptr);
+  ASSERT_EQ(Allocator.GetNumberOfAllocations(), 1);
+  ASSERT_EQ(Allocator.GetUsedMemory(), 8);
+
+  Allocator.Clear();
+
+  ASSERT_EQ(Allocator.GetSize(), BlobSize);
+  ASSERT_TRUE(Allocator.GetStart() != nullptr);
+  ASSERT_EQ(Allocator.GetNumberOfAllocations(), 0);
+  ASSERT_EQ(Allocator.GetUsedMemory(), 0);
+}
+
+
 #ifdef _DEBUG
 TEST_F(LinearAllocatorTest, deallocating_leads_to_an_assert) {
   Allocators::LinearAllocator Allocator(BlobSize, Memory);
