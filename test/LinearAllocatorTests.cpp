@@ -9,6 +9,11 @@ struct FourByteStruct {
   char Four;
 };
 
+struct FiveByteStruct {
+  char One;
+  int32_t Two;
+};
+
 class LinearAllocatorTest : public ::testing::Test {
  protected:
   void SetUp() override {
@@ -86,11 +91,58 @@ TEST_F(
   Allocator.Clear();
 }
 
-// TODO: Five byte struct with a four byte aligned allocator
+// TODO: three char struct
 
-// TODO: Three byte struct with a four byte aligned allocator
+TEST_F(
+    LinearAllocatorTest,
+    allocating_a_four_byte_aligned_object_after_an_unaligned_allocation_adjusts_for_alignment) {
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
 
-// TODO: Five byte struct with an eight byte aligned allocator
+  char* BytePtr = Allocators::AllocateNew<char>(Allocator);
+
+  ASSERT_EQ(Allocator.GetSize(), BlobSize);
+  ASSERT_TRUE(Allocator.GetStart() != nullptr);
+  ASSERT_EQ(Allocator.GetNumberOfAllocations(), 1);
+  ASSERT_EQ(Allocator.GetUsedMemory(), 1);
+
+  int* FourBytePtr = Allocators::AllocateNew<int>(Allocator);
+
+  ASSERT_EQ(Allocator.GetNumberOfAllocations(), 2);
+  ASSERT_EQ(Allocator.GetUsedMemory(), 8);
+
+  ASSERT_EQ(reinterpret_cast<size_t>(FourBytePtr) -
+                reinterpret_cast<size_t>(Allocator.GetStart()),
+            4);
+
+  Allocator.Clear();
+}
+
+TEST_F(
+    LinearAllocatorTest,
+    allocating_a_five_byte_struct_yields_correct_allocation_for_a_four_byte_aligned_allocator) {
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
+
+  FiveByteStruct* AllocatedPtr =
+      Allocators::AllocateNew<FiveByteStruct>(Allocator);
+
+  ASSERT_EQ(sizeof(FiveByteStruct), 8);
+  ASSERT_EQ(Allocator.GetSize(), BlobSize);
+  ASSERT_TRUE(Allocator.GetStart() != nullptr);
+  ASSERT_EQ(Allocator.GetNumberOfAllocations(), 1);
+  ASSERT_EQ(Allocator.GetUsedMemory(), 8);
+
+  FiveByteStruct* SecondAllocatedPtr =
+      Allocators::AllocateNew<FiveByteStruct>(Allocator);
+
+  ASSERT_EQ(Allocator.GetNumberOfAllocations(), 2);
+  ASSERT_EQ(Allocator.GetUsedMemory(), 16);
+
+  ASSERT_EQ(reinterpret_cast<size_t>(SecondAllocatedPtr) -
+                reinterpret_cast<size_t>(Allocator.GetStart()),
+            8);
+
+  Allocator.Clear();
+}
 
 // TODO: nullptr return when overflow
 
