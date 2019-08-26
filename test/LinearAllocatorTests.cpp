@@ -144,10 +144,17 @@ TEST_F(
   Allocator.Clear();
 }
 
-// TODO: nullptr return when overflow
+TEST_F(LinearAllocatorTest, allocation_returns_nullptr_when_overflow_occur) {
+  const uint32_t Size = 2;
+  Allocators::LinearAllocator Allocator(Size, Memory);
+
+  FiveByteStruct* AllocatedPtr =
+      Allocators::AllocateNew<FiveByteStruct>(Allocator);
+
+  ASSERT_EQ(AllocatedPtr, nullptr);
+}
 
 // TODO: clear resets value
-
 
 TEST_F(LinearAllocatorTest, clear_resets_the_allocator) {
   Allocators::LinearAllocator Allocator(BlobSize, Memory);
@@ -168,7 +175,6 @@ TEST_F(LinearAllocatorTest, clear_resets_the_allocator) {
   ASSERT_EQ(Allocator.GetNumberOfAllocations(), 0);
   ASSERT_EQ(Allocator.GetUsedMemory(), 0);
 }
-
 
 #ifdef _DEBUG
 TEST_F(LinearAllocatorTest, deallocating_leads_to_an_assert) {
