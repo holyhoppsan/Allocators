@@ -35,6 +35,12 @@ T* AllocateNew(AllocatorBase& Allocator, const T& t) {
   return new (Allocator.Allocate(sizeof(T), alignof(T))) T(t);
 }
 
+template <typename T, typename... Args>
+T* AllocateNew(AllocatorBase& Allocator, Args&&... Arguments) {
+  return new (Allocator.Allocate(sizeof(T), alignof(T)))
+      T(std::forward<Args>(Arguments)...);
+}
+
 template <typename T>
 void DeallocateDelete(AllocatorBase& Allocator, T& Object) {
   Object.~T();

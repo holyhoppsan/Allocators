@@ -21,6 +21,12 @@ class FourByteClass {
 
   ~FourByteClass() = default;
 
+  FourByteClass(char One, char Two, char Three)
+      : m_One(One),
+        m_Two(Two),
+        m_Three(Three),
+        m_CopyConstructorInvoked(false) {}
+
   FourByteClass(const FourByteClass& rhs) {
     m_One = rhs.m_One;
     m_Two = rhs.m_Two;
@@ -231,10 +237,25 @@ TEST_F(LinearAllocatorTest,
   Allocator.Clear();
 }
 
-// TODO: Add test for allocator using variadric template
+TEST_F(LinearAllocatorTest,
+       allocator_taking_a_variadric_template_invokes_custom_constructor) {
+  Allocators::LinearAllocator Allocator(BlobSize, Memory);
 
-// TODO: Add test for allocator taking an instance of a object (should invoke
-// the copy constructor)
+  FourByteClass* AllocatedPtr =
+      Allocators::AllocateNew<FourByteClass>(Allocator, 1, 2, 3);
+
+  ASSERT_EQ(AllocatedPtr->m_One, 1);
+  ASSERT_EQ(AllocatedPtr->m_Two, 2);
+  ASSERT_EQ(AllocatedPtr->m_Three, 3);
+  ASSERT_FALSE(AllocatedPtr->m_CopyConstructorInvoked);
+
+  ASSERT_EQ(Allocator.GetSize(), BlobSize);
+  ASSERT_TRUE(Allocator.GetStart() != nullptr);
+  ASSERT_EQ(Allocator.GetNumberOfAllocations(), 1);
+  ASSERT_EQ(Allocator.GetUsedMemory(), 4);
+
+  Allocator.Clear();
+}
 
 // TODO: Array allocation correctly with different alignments
 
